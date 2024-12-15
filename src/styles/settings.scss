@@ -1,0 +1,10 @@
+// https://vuetifyjs.com/en/features/sass-variables/#component-specific-variables
+// https://vuetifyjs.com/en/features/sass-variables/#usage-in-templates
+
+// NOTE!
+// "Placing actual styles or importing a regular stylesheet into the settings file will cause them to be duplicated everywhere the file is imported. Only put variables, mixins, and functions in the settings file, styles should be placed in the main stylesheet or loaded another way."
+// https://vuetifyjs.com/en/features/sass-variables/#duplicated-css
+
+@forward 'vuetify/settings' with (
+    $progress-circular-overlay-transition: all 0s ease-in-out, // stroke-width 0s, // can't figure out how to include a value with a comma here, so I'm just omitting this
+);
