@@ -1,13 +1,16 @@
 import '../styles/main.scss'
-// import 'vuetify/styles'
-
 import { createVuetify } from 'vuetify'
-import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
+import { mdiBrain } from '@mdi/js'
+
 
 const vuetify = createVuetify({
   icons: {
     defaultSet: 'mdi',
-    aliases, // TODO: customize https://vuetifyjs.com/en/features/icon-fonts/#creating-a-custom-icon-set
+    aliases: {
+      ...aliases,
+      contemplate: mdiBrain,
+    },
     sets: {
       mdi,
     },
