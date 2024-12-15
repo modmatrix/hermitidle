@@ -1,7 +1,7 @@
 import '../styles/main.scss'
 import { createVuetify } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
-import { mdiBrain } from '@mdi/js'
+import { mdiBrain, mdiThoughtBubble } from '@mdi/js'
 
 
 const vuetify = createVuetify({
@@ -9,7 +9,7 @@ const vuetify = createVuetify({
     defaultSet: 'mdi',
     aliases: {
       ...aliases,
-      contemplate: mdiBrain,
+      contemplate: mdiThoughtBubble,
     },
     sets: {
       mdi,

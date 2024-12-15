@@ -4,7 +4,7 @@
     
     <!-- <v-app-bar title="Hermit Idle"></v-app-bar> -->
     
-    <v-container>
+    <v-container class="py-16">
       <v-main>
         
         <progress-meter
@@ -13,21 +13,34 @@
           @click="contemplateClicked()"
         />
 
-        <p v-if="session.wisdom > 0">wisdom: {{ session.wisdom }}</p>
+        <p v-if="maxWisdom > 0" class="text-center">
+          {{ session.wisdom }}
+          wisdom
+        </p>
 
-        <v-tooltip
-          v-if="!session.haveSundial && session.wisdom >= 1"
-          text="so you can contemplate the meaning of time"
-          location="bottom"
-        >
-          <template v-slot:activator="{ props }">
-            <v-btn v-bind="props" text="build a sundial" @click="buySundial()">
-              <template v-slot:append>
-                10
-              </template>
-            </v-btn>
-          </template>
-        </v-tooltip>
+        <div class="text-center py-16">
+
+          <v-tooltip
+            v-if="!session.haveSundial && session.wisdom >= 5"
+            text="so you can contemplate the meaning of time"
+            location="bottom"
+          >
+            <template v-slot:activator="{ props }">
+              <v-btn v-bind="props" text="build a sundial" @click="buySundial()">
+                <template v-slot:append>
+                  (5 wisdom)
+                </template>
+              </v-btn>
+            </template>
+          </v-tooltip>
+
+          <v-card v-if="session.haveSundial">
+            <v-card-text>
+              <p class="text-center">imagine this is a sundial</p>
+            </v-card-text>
+          </v-card>
+
+        </div>
 
       </v-main>
     </v-container>
@@ -57,6 +70,17 @@ import NotificationService from './services/NotificationService'
       contemplating.value = false
       contemplationProgress.value = 0
       session.wisdom += 1
+      if (maxWisdom.value < session.wisdom) {
+        maxWisdom.value = session.wisdom
+        switch (session.wisdom) {
+          case 1:
+            NotificationService.success('you feel as if you have taken the first step of a journey')
+            break
+          case 3:
+            NotificationService.success('thoughts drift across your mind like clouds')
+            break
+        }
+      }
     }
   }
 
@@ -67,6 +91,7 @@ const session = reactive({
   haveSundial: false,
 })
 
+const maxWisdom = ref(0)
 const contemplating = ref(false)
 const contemplationProgress = ref(0)
 
@@ -83,7 +108,7 @@ function contemplateClicked() {
 function buySundial() {
 
   session.haveSundial = true;
-  session.wisdom -= 10;
+  session.wisdom -= 5;
   NotificationService.success('the sundial looks nice in your garden')
 
 }
