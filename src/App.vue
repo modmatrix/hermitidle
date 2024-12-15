@@ -13,16 +13,26 @@
           @click="contemplateClicked()"
         />
 
-        <v-progress-linear v-model="contemplationProgress" />
-
-        #{{ contemplationProgress }}#
-
         <p v-if="session.wisdom > 0">wisdom: {{ session.wisdom }}</p>
 
-        <v-btn text="i am a button" />
+        <v-tooltip
+          v-if="!session.haveSundial && session.wisdom >= 1"
+          text="so you can contemplate the meaning of time"
+          location="bottom"
+        >
+          <template v-slot:activator="{ props }">
+            <v-btn v-bind="props" text="build a sundial" @click="buySundial()">
+              <template v-slot:append>
+                10
+              </template>
+            </v-btn>
+          </template>
+        </v-tooltip>
 
       </v-main>
     </v-container>
+
+    <notifications />
 
   </v-app>
 
@@ -33,7 +43,9 @@
 
 import { reactive, ref } from 'vue'
 import { useRafFn } from '@vueuse/core'
+import Notifications from './components/Notifications.vue'
 import ProgressMeter from './components/ProgressMeter.vue'
+import NotificationService from './services/NotificationService'
 
 const now = ref(0)
 
@@ -54,6 +66,7 @@ const { pause, resume } = useRafFn(({ delta }) => {
 
 const session = reactive({
   wisdom: 0,
+  haveSundial: false,
 })
 
 const contemplating = ref(false)
@@ -66,6 +79,14 @@ function contemplateClicked() {
   }
 
   contemplating.value = true
+
+}
+
+function buySundial() {
+
+  session.haveSundial = true;
+  session.wisdom -= 10;
+  NotificationService.success('the sundial looks nice in your garden')
 
 }
 

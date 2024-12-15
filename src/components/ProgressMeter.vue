@@ -1,10 +1,16 @@
 <template>
-  
-  <v-progress-circular v-model="model" size="64" width="8" class="cursor-pointer">
-    {{ model }}
-  </v-progress-circular>
+  <div class="text-center">
 
+    <v-progress-circular
+      v-model="model"
+      size="64"
+      width="8"
+      class="cursor-pointer mb-2"
+    />
+      
+    <p v-if="label">{{ label }}</p>
 
+  </div>
 </template>
 
 <script setup lang="ts">
