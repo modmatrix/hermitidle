@@ -47,9 +47,7 @@ import Notifications from './components/Notifications.vue'
 import ProgressMeter from './components/ProgressMeter.vue'
 import NotificationService from './services/NotificationService'
 
-const now = ref(0)
-
-const { pause, resume } = useRafFn(({ delta }) => {
+/* const { pause, resume } = */ useRafFn((/* { delta } */) => {
   
   // console.log('delta:', delta) // in ms
 

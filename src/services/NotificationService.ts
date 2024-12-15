@@ -1,23 +1,31 @@
 import { ref } from 'vue'
 
+type MessageEnvelope = {
+  text: string
+  color: string
+  dismissible: boolean
+  timeout: number
+  show: boolean
+}
+
 class NotificationService {
 
-  messages = ref([])
+  messages = ref<MessageEnvelope[]>([])
 
-  info(message, options = {}) {
+  info(message: string, options: any = {}) {
     this.publish(message, 'info', options)
   }
 
-  success(message, options = {}) {
+  success(message: string, options: any = {}) {
     this.publish(message, 'success', options)
   }
 
-  error(message, options = {}) {
+  error(message: string, options: any = {}) {
     this.publish(message, 'error', options)
   }
 
   // TODO: probably need some way to clean these out once they've been dismissed, so they don't stay in the ref forever
-  publish(text, type, options) {
+  publish(message: string, type: string, options: any) {
 
     const defaultOptions = {
       dismissible: true,
@@ -27,7 +35,7 @@ class NotificationService {
 
     const effectiveOptions = Object.assign(defaultOptions, options)
 
-    const typeColors = {
+    const typeColors: any = {
       info: 'grey-darken-3',
       success: 'green',
       error: 'error',
@@ -39,7 +47,7 @@ class NotificationService {
     }
 
     this.messages.value.push({
-      text: text,
+      text: message,
       color: typeColors[type],
       dismissible: effectiveOptions.dismissible,
       timeout: effectiveOptions.timeout,
